@@ -21,24 +21,30 @@ io.on('connection', function(socket) {
 	console.log('New user connected');
 
 	// emit events. Similar to listener, except we are creating an event. 
-	socket.emit('newEmail', {
-		from: 'mike@example.com',
-		text: 'hey, whats up?',
-		createdAt: 123
-	});
+	// socket.emit('newEmail', {
+	// 	from: 'mike@example.com',
+	// 	text: 'hey, whats up?',
+	// 	createdAt: 123
+	// });
 
-	socket.emit('newMessage', {
-		from: 'Mike',
-		text: 'when do you want to meet?',
-		createdAt: 456
-	});
+	// socket.emit('newMessage', {
+	// 	from: 'Mike',
+	// 	text: 'when do you want to meet?',
+	// 	createdAt: 456
+	// });
 
 	// socket.on('createEmail', function(newEmail) {
 	// 	console.log('createEmail: ', newEmail);
 	// });
 
-	socket.on('createMessage', function(newMessage) {
-		console.log('createMessage: ', newMessage);
+	socket.on('createMessage', function(message) {
+		console.log('createMessage: ', message);
+		// broadcasting to all connected users
+		io.emit('newMessage', {
+			from: message.from,
+			text: message.text,
+			createdAt: new Date().getTime()
+		});
 	});
 
 	socket.on('disconnect', function() {

@@ -8,10 +8,10 @@ socket.on('connect', function() {
 	// 	text: 'Hey this is thomas'		
 	// });
 
-	socket.emit('createMessage', {
-		from: 'jen@example.com',
-		text: 'this is create message!'		
-	});
+	// socket.emit('createMessage', {
+	// 	from: 'jen@example.com',
+	// 	text: 'this is create message!'		
+	// });
 });
 
 socket.on('disconnect', function() {
@@ -19,9 +19,9 @@ socket.on('disconnect', function() {
 });
 
 // custom event
-socket.on('newEmail', function(email) {
-	console.log('New email', email);
-});
+// socket.on('newEmail', function(email) {
+// 	console.log('New email', email);
+// });
 
 socket.on('newMessage', function(message) {
 	console.log('New message', message);
