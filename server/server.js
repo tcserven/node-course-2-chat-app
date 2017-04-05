@@ -42,7 +42,7 @@ io.on('connection', function(socket) {
 
 	socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined'));
 
-	socket.on('createMessage', function(message) {
+	socket.on('createMessage', function(message, callback) {
 		console.log('createMessage: ', message);
 		
 		// broadcasting to all connected users
@@ -51,6 +51,7 @@ io.on('connection', function(socket) {
 			// text: message.text,
 			// createdAt: new Date().getTime()
 		);
+		callback('This is from the server');
 
 		// socket.broadcast.emit('newMessage', {
 		// 	from: message.from,
