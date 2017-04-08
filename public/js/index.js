@@ -24,12 +24,23 @@ socket.on('disconnect', function() {
 // });
 
 socket.on('newMessage', function(message) {
-	// console.log('New message', message);
+	
+	// templating for mustache
 	var formattedTime = moment(message.createdAt).format('h:mm a');
-	var li = jQuery('<li></li>');
-	li.text(message.from + " " + formattedTime + ": " + message.text);
+	var template = jQuery('#message-template').html();
+	var html = Mustache.render(template, {
+		text: message.text,
+		from: message.from,
+		createdAt: formattedTime
+	});
+	jQuery('#messages').append(html);
 
-	jQuery('#messages').append(li);
+	// console.log('New message', message);
+	// var formattedTime = moment(message.createdAt).format('h:mm a');
+	// var li = jQuery('<li></li>');
+	// li.text(message.from + " " + formattedTime + ": " + message.text);
+
+	// jQuery('#messages').append(li);
 });
 
 // socket.emit('createMessage', { 
@@ -40,15 +51,28 @@ socket.on('newMessage', function(message) {
 // });
 
 socket.on('newLocationMessage', function(message) {
-	var li = jQuery('<li></li>');
-	var a = jQuery('<a target="_blank">My Current Location</a>');
+	// mustache!
 	var formattedTime = moment(message.createdAt).format('h:mm a');
-	li.text(message.from + " " + formattedTime + ": ");
+	// the .html call gets all the html that is inside of that id
+	var template = jQuery('#location-message-template').html();
+	// store the return value. Render takes 2 arguments, the template you want to render, and the data you want to render into the template
+	var html = Mustache.render(template, {
+		from: message.from,
+		url: message.url,
+		createdAt: formattedTime
+	});
+	jQuery('#messages').append(html);
 
-	// setting the attribute of our anchor to the url the users geolocation provided to us
-	a.attr('href', message.url);
-	li.append(a);
-	jQuery('#messages').append(li);
+
+	// var li = jQuery('<li></li>');
+	// var a = jQuery('<a target="_blank">My Current Location</a>');
+	// var formattedTime = moment(message.createdAt).format('h:mm a');
+	// li.text(message.from + " " + formattedTime + ": ");
+
+	// // setting the attribute of our anchor to the url the users geolocation provided to us
+	// a.attr('href', message.url);
+	// li.append(a);
+	// jQuery('#messages').append(li);
 });
 
 // preventing page reload
