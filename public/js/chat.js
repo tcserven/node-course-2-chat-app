@@ -18,6 +18,11 @@ function scrollToBottom() {
 		// jquery messages
 		messages.scrollTop(scrollHeight);
 	}
+
+	// if (clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
+	// 	messages.animate({scrollTop:scrollHeight}, 1000);
+	// 	return false;
+	// }
 }
 
 socket.on('connect', function() {
